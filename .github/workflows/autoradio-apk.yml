@@ -1,0 +1,38 @@
+name: Autoradio launcher APK
+
+on:
+  push:
+    paths:
+      - 'autoradio-launcher/**'
+      - '.github/workflows/autoradio-apk.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: autoradio-launcher
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      # ubuntu-latest ships JDK 17 and the Android SDK (ANDROID_HOME)
+      - name: Build release APK
+        run: |
+          export JAVA_HOME="$JAVA_HOME_17_X64"
+          chmod +x gradlew
+          ./gradlew --no-daemon assembleRelease
+          cp app/build/outputs/apk/release/app-release.apk autoradio-launcher.apk
+          ls -lh autoradio-launcher.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: autoradio-launcher-apk
+          path: autoradio-launcher/autoradio-launcher.apk
+          retention-days: 30
