@@ -13,10 +13,10 @@ Seulement 5 grosses tuiles, une horloge et rien d'autre :
 
 ## Pourquoi c'est léger
 
-- Aucune bibliothèque (pas d'AndroidX, pas de Kotlin) : l'APK fait quelques dizaines de Ko.
+- Aucune bibliothèque (pas d'AndroidX, pas de Kotlin) : l'APK fait environ 150 Ko.
 - Aucun service en arrière-plan, aucune notification, aucun widget, pas de fond d'écran animé.
-- Fond en dégradé fixe, sans 3D, sans flou animé ni animations de transition.
-- La photo est réduite à 1024 px et chargée en 16 bits : environ 1 Mo de RAM.
+- Fond d'écran fixe (image de 5 Ko), cartes translucides sans flou en temps réel, aucune animation.
+- La scène voiture + figurine est une image fixe de 975 × 498 px : environ 2 Mo de RAM, pas de 3D.
 - L'horloge (`TextClock`) se met à jour toute seule une fois par minute, sans tâche en boucle.
 - Quand Waze, Spotify ou CarPlay est au premier plan, le lanceur ne consomme presque rien.
 
@@ -30,13 +30,16 @@ Seulement 5 grosses tuiles, une horloge et rien d'autre :
 
 ## Utilisation
 
-L'écran ressemble à CarPlay : une barre d'icônes à gauche, la photo de la voiture au centre,
-l'heure et un gros bouton **CarPlay** à droite.
+L'écran reprend le style CarPlay : une barre d'icônes à gauche, la carte « Audi A3 » au centre
+(l'A3 noire et la figurine PLK sur leur plateau), une carte musique et un gros bouton **CarPlay** à droite.
 
-- **Appui court** sur une icône : ouvre l'application.
+- **Appui court** sur une icône : ouvre l'application (Waze, Spotify, Téléphone, Messages).
 - **Appui long** sur une icône (ou sur le bouton CarPlay) : choisir l'application à utiliser
   (utile si votre appli CarPlay ou téléphone a un autre nom). Le choix est mémorisé.
-- **Appui long sur la photo** : changer la photo, changer le nom affiché, ou revenir à la photo d'origine.
+- **Carte musique** : précédent / lecture-pause / suivant pilotent la musique en cours
+  (Spotify, Bluetooth…). Toucher « Spotify » ouvre l'appli.
+- **Badge PLK** : ouvre PLK dans Spotify.
+- **Appui long sur la voiture** : changer l'image, changer le nom affiché, ou revenir à l'image d'origine.
 - **Icône grille** (en bas à gauche) : liste de toutes les applis, pour les cas ponctuels.
 - **Appui long sur l'heure** (en haut à gauche) : ouvre les paramètres Android.
 

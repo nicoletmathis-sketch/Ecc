@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="@dimen/dock_width"
         android:layout_height="match_parent"
-        android:background="@drawable/dock_bg"
+        android:background="@drawable/card_bg"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:paddingTop="14dp"
@@ -23,34 +23,34 @@
             android:format12Hour="HH:mm"
             android:format24Hour="HH:mm"
             android:textColor="@color/text"
-            android:textSize="20sp"
+            android:textSize="19sp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/tile_waze"
             style="@style/DockIcon"
-            android:background="@drawable/icon_bg_waze"
+            android:background="@drawable/icon_nav"
             android:contentDescription="@string/tile_waze"
-            android:src="@drawable/ic_waze" />
+            android:src="@drawable/ic_nav" />
 
         <ImageView
             android:id="@+id/tile_spotify"
             style="@style/DockIcon"
-            android:background="@drawable/icon_bg_spotify"
+            android:background="@drawable/icon_music"
             android:contentDescription="@string/tile_spotify"
-            android:src="@drawable/ic_spotify" />
+            android:src="@drawable/ic_music" />
 
         <ImageView
             android:id="@+id/tile_phone"
             style="@style/DockIcon"
-            android:background="@drawable/icon_bg_phone"
+            android:background="@drawable/icon_phone"
             android:contentDescription="@string/tile_phone"
             android:src="@drawable/ic_phone" />
 
         <ImageView
             android:id="@+id/tile_messages"
             style="@style/DockIcon"
-            android:background="@drawable/icon_bg_messages"
+            android:background="@drawable/icon_messages"
             android:contentDescription="@string/tile_messages"
             android:src="@drawable/ic_messages" />
 
@@ -62,12 +62,12 @@
         <ImageView
             android:id="@+id/btn_apps"
             style="@style/DockIcon"
-            android:background="@drawable/icon_bg_apps"
+            android:background="@drawable/icon_apps"
             android:contentDescription="@string/all_apps"
             android:src="@drawable/ic_apps" />
     </LinearLayout>
 
-    <!-- Main card: the car -->
+    <!-- Main card: the car + figurine scene -->
     <FrameLayout
         android:id="@+id/car_card"
         android:layout_width="0dp"
@@ -82,19 +82,20 @@
             android:id="@+id/car_photo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="84dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="12dp"
+            android:adjustViewBounds="false"
             android:contentDescription="@string/car_options"
-            android:scaleType="centerCrop" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/scrim" />
+            android:scaleType="fitEnd" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="22dp">
+            android:paddingStart="22dp"
+            android:paddingTop="18dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -106,11 +107,9 @@
                     android:id="@+id/car_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:shadowColor="#99000000"
-                    android:shadowRadius="6"
                     android:text="@string/default_car_name"
                     android:textColor="@color/text"
-                    android:textSize="30sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
 
                 <!-- PLK badge: opens PLK in Spotify -->
@@ -118,18 +117,18 @@
                     android:id="@+id/badge_plk"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="10dp"
                     android:background="@drawable/badge_plk"
                     android:clickable="true"
                     android:focusable="true"
                     android:letterSpacing="0.15"
-                    android:paddingStart="12dp"
-                    android:paddingTop="4dp"
-                    android:paddingEnd="12dp"
-                    android:paddingBottom="4dp"
+                    android:paddingStart="10dp"
+                    android:paddingTop="3dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="3dp"
                     android:text="@string/plk"
-                    android:textColor="@color/text"
-                    android:textSize="15sp"
+                    android:textColor="@color/badge_text"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -138,14 +137,12 @@
                 android:layout_height="wrap_content"
                 android:format12Hour="EEEE d MMMM"
                 android:format24Hour="EEEE d MMMM"
-                android:shadowColor="#99000000"
-                android:shadowRadius="6"
                 android:textColor="@color/text_dim"
-                android:textSize="16sp" />
+                android:textSize="15sp" />
         </LinearLayout>
     </FrameLayout>
 
-    <!-- Right column: big clock + big CarPlay button -->
+    <!-- Right column: music controls + big CarPlay button -->
     <LinearLayout
         android:layout_width="@dimen/right_column"
         android:layout_height="match_parent"
@@ -153,30 +150,84 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/clock_card"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:background="@drawable/card_bg"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <TextClock
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/media_header"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:format12Hour="HH:mm"
-                android:format24Hour="HH:mm"
-                android:textColor="@color/text"
-                android:textSize="64sp"
-                android:textStyle="bold" />
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <TextClock
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:background="@drawable/icon_music"
+                    android:contentDescription="@string/media_title"
+                    android:padding="11dp"
+                    android:src="@drawable/ic_music" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/media_title"
+                        android:textColor="@color/text"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/media_subtitle"
+                        android:textColor="@color/text_dim"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:format12Hour="EEE d MMM"
-                android:format24Hour="EEE d MMM"
-                android:textColor="@color/text_dim"
-                android:textSize="18sp" />
+                android:layout_marginTop="14dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/media_prev"
+                    style="@style/MediaButton"
+                    android:contentDescription="@string/media_prev"
+                    android:src="@drawable/ic_prev" />
+
+                <ImageView
+                    android:id="@+id/media_play"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="14dp"
+                    android:background="@drawable/white_circle"
+                    android:clickable="true"
+                    android:contentDescription="@string/media_play_pause"
+                    android:focusable="true"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_play" />
+
+                <ImageView
+                    android:id="@+id/media_next"
+                    style="@style/MediaButton"
+                    android:contentDescription="@string/media_next"
+                    android:src="@drawable/ic_next" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -185,7 +236,7 @@
             android:layout_height="0dp"
             android:layout_marginTop="14dp"
             android:layout_weight="1"
-            android:background="@drawable/icon_bg_carplay"
+            android:background="@drawable/card_carplay"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"
@@ -194,24 +245,26 @@
             <ImageView
                 android:layout_width="64dp"
                 android:layout_height="64dp"
+                android:background="@drawable/white_square"
                 android:contentDescription="@string/tile_carplay"
-                android:src="@drawable/ic_car" />
+                android:padding="13dp"
+                android:src="@drawable/ic_carplay" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/tile_carplay"
                 android:textColor="@color/text"
-                android:textSize="26sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/carplay_hint"
-                android:textColor="#CCFFFFFF"
-                android:textSize="14sp" />
+                android:textColor="@color/text_dim"
+                android:textSize="13sp" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

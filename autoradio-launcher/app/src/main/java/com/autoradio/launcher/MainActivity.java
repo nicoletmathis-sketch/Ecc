@@ -9,6 +9,11 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.AudioManager;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.SystemClock;
+import android.view.KeyEvent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -72,6 +77,15 @@ public class MainActivity extends Activity {
     private SharedPreferences prefs;
     private ImageView carPhoto;
     private TextView carName;
+    private ImageView playButton;
+    private AudioManager audio;
+    private final Handler handler = new Handler(Looper.getMainLooper());
+    private final Runnable refreshPlay = new Runnable() {
+        @Override
+        public void run() {
+            updatePlayIcon();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +164,19 @@ public class MainActivity extends Activity {
         });
         loadCarPhoto();
 
+        // Music card: controls whatever is playing (Spotify, Bluetooth audio...)
+        audio = (AudioManager) getSystemService(AUDIO_SERVICE);
+        playButton = (ImageView) findViewById(R.id.media_play);
+        bindMediaKey(R.id.media_prev, KeyEvent.KEYCODE_MEDIA_PREVIOUS);
+        bindMediaKey(R.id.media_play, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE);
+        bindMediaKey(R.id.media_next, KeyEvent.KEYCODE_MEDIA_NEXT);
+        findViewById(R.id.media_header).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                open(slots[1]);
+            }
+        });
+
         // Long press on the clock = Android settings (handy without a status bar)
         findViewById(R.id.clock).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -158,6 +185,38 @@ public class MainActivity extends Activity {
                 return true;
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updatePlayIcon();
+    }
+
+    @Override
+    protected void onDestroy() {
+        handler.removeCallbacksAndMessages(null);
+        super.onDestroy();
+    }
+
+    private void bindMediaKey(int viewId, final int keyCode) {
+        findViewById(viewId).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long now = SystemClock.uptimeMillis();
+                audio.dispatchMediaKeyEvent(new KeyEvent(now, now, KeyEvent.ACTION_DOWN, keyCode, 0));
+                audio.dispatchMediaKeyEvent(new KeyEvent(now, now, KeyEvent.ACTION_UP, keyCode, 0));
+                // The player needs a moment to react before we read its state
+                handler.removeCallbacks(refreshPlay);
+                handler.postDelayed(refreshPlay, 600);
+            }
+        });
+    }
+
+    private void updatePlayIcon() {
+        if (playButton != null && audio != null) {
+            playButton.setImageResource(audio.isMusicActive() ? R.drawable.ic_pause : R.drawable.ic_play);
+        }
     }
 
     @Override
@@ -328,21 +387,16 @@ public class MainActivity extends Activity {
             }
         }
         if (bitmap == null) {
-            // Bundled photo, decoded in 16 bits as well (~1.9 MB instead of ~3.8 MB)
+            // Bundled car + figurine scene (has transparency, so full 32-bit)
             BitmapFactory.Options opts = new BitmapFactory.Options();
-            opts.inPreferredConfig = Bitmap.Config.RGB_565;
             opts.inScaled = false;
             try {
-                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.car_photo_default, opts);
+                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.hero_scene, opts);
             } catch (OutOfMemoryError e) {
                 bitmap = null;
             }
         }
-        if (bitmap != null) {
-            carPhoto.setImageBitmap(bitmap);
-        } else {
-            carPhoto.setImageDrawable(null);
-        }
+        carPhoto.setImageBitmap(bitmap);
     }
 
     private static int sampleSize(int width, int height) {
