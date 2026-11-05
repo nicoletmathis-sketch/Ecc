@@ -7,11 +7,24 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.InputType;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -33,6 +46,11 @@ import java.util.List;
 public class MainActivity extends Activity {
 
     private static final String PREFS = "slots";
+    private static final String KEY_CAR_NAME = "car_name";
+    private static final String CAR_PHOTO_FILE = "car_photo.jpg";
+    private static final int REQUEST_PHOTO = 1;
+    /** Longest side of the stored photo: plenty for a 1024x600 screen, ~1 MB in RAM. */
+    private static final int PHOTO_MAX_SIDE = 1024;
 
     private static final class Slot {
         final String key;
@@ -52,6 +70,8 @@ public class MainActivity extends Activity {
 
     private Slot[] slots;
     private SharedPreferences prefs;
+    private ImageView carPhoto;
+    private TextView carName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +129,21 @@ public class MainActivity extends Activity {
                 pickApp(null);
             }
         });
+        carPhoto = (ImageView) findViewById(R.id.car_photo);
+        carName = (TextView) findViewById(R.id.car_name);
+        View carCard = findViewById(R.id.car_card);
+        // Rounded corners on the photo, clipped by the GPU (no extra bitmap)
+        carCard.setClipToOutline(true);
+        carCard.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                showCarOptions();
+                return true;
+            }
+        });
+        carName.setText(prefs.getString(KEY_CAR_NAME, getString(R.string.default_car_name)));
+        loadCarPhoto();
+
         // Long press on the clock = Android settings (handy without a status bar)
         findViewById(R.id.clock).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -163,6 +198,139 @@ public class MainActivity extends Activity {
         } catch (ActivityNotFoundException | SecurityException e) {
             return false;
         }
+    }
+
+    // ---- Car card: photo and name ----------------------------------------
+
+    private void showCarOptions() {
+        CharSequence[] items = {
+            getString(R.string.change_photo),
+            getString(R.string.rename_car),
+            getString(R.string.reset_photo),
+        };
+        new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert)
+            .setTitle(R.string.car_options)
+            .setItems(items, (dialog, which) -> {
+                if (which == 0) {
+                    Intent pick = new Intent(Intent.ACTION_GET_CONTENT).setType("image/*");
+                    try {
+                        startActivityForResult(pick, REQUEST_PHOTO);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(this, R.string.photo_error, Toast.LENGTH_SHORT).show();
+                    }
+                } else if (which == 1) {
+                    renameCar();
+                } else {
+                    //noinspection ResultOfMethodCallIgnored
+                    photoFile().delete();
+                    loadCarPhoto();
+                }
+            })
+            .show();
+    }
+
+    private void renameCar() {
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+        input.setSingleLine(true);
+        input.setText(carName.getText());
+        input.setSelection(input.getText().length());
+        new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert)
+            .setTitle(R.string.rename_car)
+            .setView(input)
+            .setPositiveButton(R.string.ok, (dialog, which) -> {
+                String name = input.getText().toString().trim();
+                prefs.edit().putString(KEY_CAR_NAME, name).apply();
+                carName.setText(name);
+            })
+            .setNegativeButton(R.string.cancel, null)
+            .show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode != REQUEST_PHOTO || resultCode != RESULT_OK || data == null || data.getData() == null) {
+            return;
+        }
+        if (saveCarPhoto(data.getData())) {
+            loadCarPhoto();
+        } else {
+            Toast.makeText(this, R.string.photo_error, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private File photoFile() {
+        return new File(getFilesDir(), CAR_PHOTO_FILE);
+    }
+
+    /** Copies the chosen image, downscaled, into private storage. */
+    private boolean saveCarPhoto(Uri uri) {
+        Bitmap bitmap = null;
+        try {
+            BitmapFactory.Options bounds = new BitmapFactory.Options();
+            bounds.inJustDecodeBounds = true;
+            try (InputStream in = getContentResolver().openInputStream(uri)) {
+                BitmapFactory.decodeStream(in, null, bounds);
+            }
+            if (bounds.outWidth <= 0 || bounds.outHeight <= 0) {
+                return false;
+            }
+            BitmapFactory.Options opts = new BitmapFactory.Options();
+            opts.inSampleSize = sampleSize(bounds.outWidth, bounds.outHeight);
+            try (InputStream in = getContentResolver().openInputStream(uri)) {
+                bitmap = BitmapFactory.decodeStream(in, null, opts);
+            }
+            if (bitmap == null) {
+                return false;
+            }
+            try (OutputStream out = new FileOutputStream(photoFile())) {
+                return bitmap.compress(Bitmap.CompressFormat.JPEG, 88, out);
+            }
+        } catch (IOException | SecurityException | OutOfMemoryError e) {
+            return false;
+        } finally {
+            if (bitmap != null) {
+                bitmap.recycle();
+            }
+        }
+    }
+
+    private void loadCarPhoto() {
+        File file = photoFile();
+        Bitmap bitmap = null;
+        if (file.exists()) {
+            BitmapFactory.Options bounds = new BitmapFactory.Options();
+            bounds.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(file.getPath(), bounds);
+            BitmapFactory.Options opts = new BitmapFactory.Options();
+            opts.inSampleSize = sampleSize(bounds.outWidth, bounds.outHeight);
+            // Photo has no transparency: 16-bit pixels halve the memory used
+            opts.inPreferredConfig = Bitmap.Config.RGB_565;
+            try {
+                bitmap = BitmapFactory.decodeFile(file.getPath(), opts);
+            } catch (OutOfMemoryError e) {
+                bitmap = null;
+            }
+        }
+        if (bitmap != null) {
+            carPhoto.setImageBitmap(bitmap);
+            carPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            carPhoto.setPadding(0, 0, 0, 0);
+        } else {
+            int pad = Math.round(24 * getResources().getDisplayMetrics().density);
+            carPhoto.setImageResource(R.drawable.car_photo_default);
+            carPhoto.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            carPhoto.setPadding(pad, pad * 3, pad, pad);
+        }
+    }
+
+    private static int sampleSize(int width, int height) {
+        int sample = 1;
+        while (Math.max(width, height) / sample > PHOTO_MAX_SIDE) {
+            sample *= 2;
+        }
+        return sample;
     }
 
     /**

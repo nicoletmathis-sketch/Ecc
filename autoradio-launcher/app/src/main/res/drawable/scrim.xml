@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Darkens the top of the photo so the title stays readable -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <gradient
+        android:angle="270"
+        android:centerColor="#00000000"
+        android:endColor="#66000000"
+        android:startColor="#B3000000" />
+</shape>

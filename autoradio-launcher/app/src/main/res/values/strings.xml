@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Autoradio</string>
+    <string name="default_car_name">Audi A3</string>
     <string name="tile_waze">Waze</string>
     <string name="tile_spotify">Spotify</string>
     <string name="tile_phone">Téléphone</string>
     <string name="tile_messages">Messages</string>
     <string name="tile_carplay">CarPlay</string>
+    <string name="carplay_hint">Toucher pour lancer</string>
     <string name="all_apps">Applications</string>
     <string name="pick_app_for">Choisir l\'application pour « %1$s »</string>
     <string name="pick_app">Ouvrir une application</string>
     <string name="not_found">« %1$s » introuvable : choisissez l\'application à utiliser</string>
     <string name="assigned">« %1$s » ouvrira %2$s</string>
-    <string name="hint">Appui long sur une tuile pour changer d\'application</string>
+    <string name="car_options">Ma voiture</string>
+    <string name="change_photo">Changer la photo</string>
+    <string name="reset_photo">Photo d\'origine</string>
+    <string name="rename_car">Changer le nom</string>
+    <string name="photo_error">Impossible de lire cette image</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Annuler</string>
 </resources>

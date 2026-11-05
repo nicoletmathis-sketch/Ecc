@@ -15,25 +15,30 @@ Seulement 5 grosses tuiles, une horloge et rien d'autre :
 
 - Aucune bibliothèque (pas d'AndroidX, pas de Kotlin) : l'APK fait quelques dizaines de Ko.
 - Aucun service en arrière-plan, aucune notification, aucun widget, pas de fond d'écran animé.
-- Fond noir uni, sans animations de transition.
+- Fond en dégradé fixe, sans 3D, sans flou animé ni animations de transition.
+- La photo est réduite à 1024 px et chargée en 16 bits : environ 1 Mo de RAM.
 - L'horloge (`TextClock`) se met à jour toute seule une fois par minute, sans tâche en boucle.
 - Quand Waze, Spotify ou CarPlay est au premier plan, le lanceur ne consomme presque rien.
 
 ## Installation
 
 1. Télécharger l'APK (lien direct, sans compte GitHub) :
-   https://github.com/nicoletmathis-sketch/Ecc/releases/download/autoradio-latest/autoradio-launcher.apk
+   <https://github.com/nicoletmathis-sketch/Ecc/releases/download/autoradio-latest/autoradio-launcher.apk>
 2. L'ouvrir directement dans le navigateur de l'autoradio, ou le copier sur une clé USB, puis l'installer (autoriser les « sources inconnues »).
 3. Appuyer sur le bouton Accueil, choisir **Autoradio** puis **Toujours**.
    Si l'autoradio ne le propose pas : *Paramètres → Applications → Applications par défaut → Appli d'accueil*.
 
 ## Utilisation
 
-- **Appui court** sur une tuile : ouvre l'application.
-- **Appui long** sur une tuile : choisir l'application à utiliser pour cette tuile
+L'écran ressemble à CarPlay : une barre d'icônes à gauche, la photo de la voiture au centre,
+l'heure et un gros bouton **CarPlay** à droite.
+
+- **Appui court** sur une icône : ouvre l'application.
+- **Appui long** sur une icône (ou sur le bouton CarPlay) : choisir l'application à utiliser
   (utile si votre appli CarPlay ou téléphone a un autre nom). Le choix est mémorisé.
-- **Applications** (en haut à droite) : liste de toutes les applis, pour les cas ponctuels.
-- **Appui long sur l'heure** : ouvre les paramètres Android.
+- **Appui long sur la photo** : changer la photo, changer le nom affiché, ou revenir à la photo d'origine.
+- **Icône grille** (en bas à gauche) : liste de toutes les applis, pour les cas ponctuels.
+- **Appui long sur l'heure** (en haut à gauche) : ouvre les paramètres Android.
 
 Si une appli n'est pas trouvée, le lanceur vous demande directement laquelle utiliser.
 

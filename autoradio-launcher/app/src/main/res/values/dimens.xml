@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Compact defaults (head units reporting a small dp height) -->
+    <dimen name="dock_icon">50dp</dimen>
+    <dimen name="dock_icon_padding">12dp</dimen>
+    <dimen name="dock_icon_gap">6dp</dimen>
+    <dimen name="dock_width">76dp</dimen>
+    <dimen name="right_column">200dp</dimen>
+</resources>

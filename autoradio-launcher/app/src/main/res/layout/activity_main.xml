@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Designed for 1024x600 landscape head units -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg"
-    android:orientation="vertical"
-    android:padding="12dp">
+    android:orientation="horizontal"
+    android:padding="14dp">
 
-    <!-- Top bar: clock + date (TextClock updates itself once a minute, no polling) -->
+    <!-- Left dock: clock + app icons, CarPlay style -->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp">
+        android:layout_width="@dimen/dock_width"
+        android:layout_height="match_parent"
+        android:background="@drawable/dock_bg"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp">
 
         <TextClock
             android:id="@+id/clock"
@@ -22,76 +23,171 @@
             android:format12Hour="HH:mm"
             android:format24Hour="HH:mm"
             android:textColor="@color/text"
-            android:textSize="56sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-        <TextClock
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:format12Hour="EEEE d MMMM"
-            android:format24Hour="EEEE d MMMM"
-            android:paddingStart="20dp"
-            android:textColor="@color/text_dim"
-            android:textSize="22sp" />
-
-        <TextView
-            android:id="@+id/btn_apps"
-            android:layout_width="wrap_content"
-            android:layout_height="56dp"
-            android:background="@drawable/tile_bg"
-            android:gravity="center"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="@string/all_apps"
-            android:textColor="@color/text_dim"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <!-- 5 big tiles, readable at arm's length -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="12dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <TextView
+        <ImageView
             android:id="@+id/tile_waze"
-            style="@style/Tile"
-            android:drawableTop="@drawable/ic_waze"
-            android:text="@string/tile_waze" />
+            style="@style/DockIcon"
+            android:background="@drawable/icon_bg_waze"
+            android:contentDescription="@string/tile_waze"
+            android:src="@drawable/ic_waze" />
 
-        <TextView
+        <ImageView
             android:id="@+id/tile_spotify"
-            style="@style/Tile"
-            android:drawableTop="@drawable/ic_spotify"
-            android:text="@string/tile_spotify" />
+            style="@style/DockIcon"
+            android:background="@drawable/icon_bg_spotify"
+            android:contentDescription="@string/tile_spotify"
+            android:src="@drawable/ic_spotify" />
 
-        <TextView
+        <ImageView
             android:id="@+id/tile_phone"
-            style="@style/Tile"
-            android:drawableTop="@drawable/ic_phone"
-            android:text="@string/tile_phone" />
+            style="@style/DockIcon"
+            android:background="@drawable/icon_bg_phone"
+            android:contentDescription="@string/tile_phone"
+            android:src="@drawable/ic_phone" />
 
-        <TextView
+        <ImageView
             android:id="@+id/tile_messages"
-            style="@style/Tile"
-            android:drawableTop="@drawable/ic_messages"
-            android:text="@string/tile_messages" />
+            style="@style/DockIcon"
+            android:background="@drawable/icon_bg_messages"
+            android:contentDescription="@string/tile_messages"
+            android:src="@drawable/ic_messages" />
 
-        <TextView
-            android:id="@+id/tile_carplay"
-            style="@style/Tile"
-            android:drawableTop="@drawable/ic_car"
-            android:text="@string/tile_carplay" />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/btn_apps"
+            style="@style/DockIcon"
+            android:background="@drawable/icon_bg_apps"
+            android:contentDescription="@string/all_apps"
+            android:src="@drawable/ic_apps" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingTop="4dp"
-        android:text="@string/hint"
-        android:textColor="@color/text_dim"
-        android:textSize="13sp" />
+    <!-- Main card: the car -->
+    <FrameLayout
+        android:id="@+id/car_card"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="14dp"
+        android:layout_weight="1"
+        android:background="@drawable/card_bg"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/car_photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/car_options"
+            android:padding="24dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/car_photo_default" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/scrim" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="22dp">
+
+            <TextView
+                android:id="@+id/car_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:shadowColor="#99000000"
+                android:shadowRadius="6"
+                android:text="@string/default_car_name"
+                android:textColor="@color/text"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextClock
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:format12Hour="EEEE d MMMM"
+                android:format24Hour="EEEE d MMMM"
+                android:shadowColor="#99000000"
+                android:shadowRadius="6"
+                android:textColor="@color/text_dim"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Right column: big clock + big CarPlay button -->
+    <LinearLayout
+        android:layout_width="@dimen/right_column"
+        android:layout_height="match_parent"
+        android:layout_marginStart="14dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/clock_card"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/card_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextClock
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:format12Hour="HH:mm"
+                android:format24Hour="HH:mm"
+                android:textColor="@color/text"
+                android:textSize="64sp"
+                android:textStyle="bold" />
+
+            <TextClock
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:format12Hour="EEE d MMM"
+                android:format24Hour="EEE d MMM"
+                android:textColor="@color/text_dim"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tile_carplay"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="14dp"
+            android:layout_weight="1"
+            android:background="@drawable/icon_bg_carplay"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:contentDescription="@string/tile_carplay"
+                android:src="@drawable/ic_car" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/tile_carplay"
+                android:textColor="@color/text"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/carplay_hint"
+                android:textColor="#CCFFFFFF"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
