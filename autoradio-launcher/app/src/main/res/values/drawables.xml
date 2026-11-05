@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Default car image (replaced by a bundled photo of the user's car) -->
-    <item name="car_photo_default" type="drawable">@drawable/car_placeholder</item>
-</resources>

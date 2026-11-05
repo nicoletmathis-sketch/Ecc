@@ -13,7 +13,4 @@
     <color name="messages">#2F8CFF</color>
     <color name="carplay">#5B5FE8</color>
     <color name="apps">#3A3F55</color>
-    <color name="car_body">#C9CFDA</color>
-    <color name="car_glass">#2A3352</color>
-    <color name="car_wheel">#11131C</color>
 </resources>

@@ -2,6 +2,8 @@
 <resources>
     <string name="app_name">Autoradio</string>
     <string name="default_car_name">Audi A3</string>
+    <string name="plk">PLK</string>
+    <string name="plk_search">spotify:search:PLK</string>
     <string name="tile_waze">Waze</string>
     <string name="tile_spotify">Spotify</string>
     <string name="tile_phone">Téléphone</string>

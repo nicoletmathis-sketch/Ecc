@@ -142,6 +142,12 @@ public class MainActivity extends Activity {
             }
         });
         carName.setText(prefs.getString(KEY_CAR_NAME, getString(R.string.default_car_name)));
+        findViewById(R.id.badge_plk).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPlk();
+            }
+        });
         loadCarPhoto();
 
         // Long press on the clock = Android settings (handy without a status bar)
@@ -260,6 +266,14 @@ public class MainActivity extends Activity {
         }
     }
 
+    /** PLK in Spotify if installed, otherwise just opens the Spotify slot. */
+    private void openPlk() {
+        Intent search = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.plk_search)));
+        if (search.resolveActivity(getPackageManager()) == null || !start(search)) {
+            open(slots[1]);
+        }
+    }
+
     private File photoFile() {
         return new File(getFilesDir(), CAR_PHOTO_FILE);
     }
@@ -313,15 +327,21 @@ public class MainActivity extends Activity {
                 bitmap = null;
             }
         }
+        if (bitmap == null) {
+            // Bundled photo, decoded in 16 bits as well (~1.9 MB instead of ~3.8 MB)
+            BitmapFactory.Options opts = new BitmapFactory.Options();
+            opts.inPreferredConfig = Bitmap.Config.RGB_565;
+            opts.inScaled = false;
+            try {
+                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.car_photo_default, opts);
+            } catch (OutOfMemoryError e) {
+                bitmap = null;
+            }
+        }
         if (bitmap != null) {
             carPhoto.setImageBitmap(bitmap);
-            carPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            carPhoto.setPadding(0, 0, 0, 0);
         } else {
-            int pad = Math.round(24 * getResources().getDisplayMetrics().density);
-            carPhoto.setImageResource(R.drawable.car_photo_default);
-            carPhoto.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            carPhoto.setPadding(pad, pad * 3, pad, pad);
+            carPhoto.setImageDrawable(null);
         }
     }
 
