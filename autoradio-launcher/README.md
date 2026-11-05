@@ -21,9 +21,9 @@ Seulement 5 grosses tuiles, une horloge et rien d'autre :
 
 ## Installation
 
-1. Récupérer l'APK : onglet **Actions** du dépôt GitHub → workflow **Autoradio launcher APK** →
-   dernière exécution → artefact `autoradio-launcher-apk` (un zip qui contient `autoradio-launcher.apk`).
-2. Le copier sur une clé USB et l'installer sur l'autoradio (autoriser les « sources inconnues »).
+1. Télécharger l'APK (lien direct, sans compte GitHub) :
+   https://github.com/nicoletmathis-sketch/Ecc/releases/download/autoradio-latest/autoradio-launcher.apk
+2. L'ouvrir directement dans le navigateur de l'autoradio, ou le copier sur une clé USB, puis l'installer (autoriser les « sources inconnues »).
 3. Appuyer sur le bouton Accueil, choisir **Autoradio** puis **Toujours**.
    Si l'autoradio ne le propose pas : *Paramètres → Applications → Applications par défaut → Appli d'accueil*.
 
