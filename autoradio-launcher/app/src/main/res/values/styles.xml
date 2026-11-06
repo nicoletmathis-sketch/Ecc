@@ -1,32 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Static wallpaper, no live wallpaper, no window animations: cheap to draw -->
+    <!-- Plain black, no wallpaper, no window animations: cheapest possible to draw -->
     <style name="LauncherTheme" parent="@android:style/Theme.Material.NoActionBar.Fullscreen">
-        <item name="android:windowBackground">@drawable/wallpaper</item>
+        <item name="android:windowBackground">@color/bg</item>
         <item name="android:windowShowWallpaper">false</item>
         <item name="android:windowAnimationStyle">@null</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:colorAccent">@color/blue</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <!-- Rounded gradient app icon in the left dock -->
-    <style name="DockIcon">
-        <item name="android:layout_width">@dimen/dock_icon</item>
-        <item name="android:layout_height">@dimen/dock_icon</item>
-        <item name="android:layout_marginTop">@dimen/dock_icon_gap</item>
-        <item name="android:padding">@dimen/dock_icon_padding</item>
+    <style name="SideIcon">
+        <item name="android:layout_width">@dimen/side_icon</item>
+        <item name="android:layout_height">@dimen/side_icon</item>
+        <item name="android:layout_marginTop">@dimen/side_gap</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
     </style>
 
-    <style name="MediaButton">
-        <item name="android:layout_width">52dp</item>
-        <item name="android:layout_height">52dp</item>
-        <item name="android:padding">12dp</item>
-        <item name="android:background">@drawable/round_ripple</item>
-        <item name="android:scaleType">fitCenter</item>
+    <style name="Card">
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
+    </style>
+
+    <style name="Title">
+        <item name="android:textColor">@color/text</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="Secondary">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
     </style>
 </resources>

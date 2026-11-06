@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="dock_icon">60dp</dimen>
-    <dimen name="dock_icon_padding">14dp</dimen>
-    <dimen name="dock_icon_gap">12dp</dimen>
-    <dimen name="dock_width">88dp</dimen>
+    <dimen name="side_width">86dp</dimen>
+    <dimen name="side_icon">56dp</dimen>
+    <dimen name="side_gap">14dp</dimen>
+    <dimen name="gap">10dp</dimen>
+    <dimen name="hero_clock">72sp</dimen>
+    <dimen name="hero_image_top">150dp</dimen>
+    <dimen name="art">84dp</dimen>
+    <dimen name="speed_text">52sp</dimen>
+    <dimen name="mini_icon">40dp</dimen>
+    <dimen name="grid_icon">92dp</dimen>
+    <dimen name="grid_label">15sp</dimen>
+    <dimen name="media_play">40dp</dimen>
+    <dimen name="media_skip">32dp</dimen>
 </resources>

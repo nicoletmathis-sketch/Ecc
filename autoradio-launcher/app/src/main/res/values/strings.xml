@@ -1,20 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Autoradio</string>
-    <string name="default_car_name">Audi A3</string>
+    <string name="default_car_name">Audi A3 Sportback</string>
     <string name="plk">PLK</string>
     <string name="plk_search">spotify:search:PLK</string>
+
+    <string name="hello_morning">Bonjour</string>
+    <string name="hello_afternoon">Bon après-midi</string>
+    <string name="hello_evening">Bonsoir</string>
+
     <string name="tile_waze">Waze</string>
     <string name="tile_spotify">Spotify</string>
     <string name="tile_phone">Téléphone</string>
     <string name="tile_messages">Messages</string>
     <string name="tile_carplay">CarPlay</string>
-    <string name="carplay_hint">Toucher pour lancer</string>
-    <string name="media_title">Spotify</string>
-    <string name="media_subtitle">Musique en cours</string>
+    <string name="tile_radio">Radio</string>
+    <string name="tile_bluetooth">Bluetooth</string>
+    <string name="tile_files">Fichiers</string>
+    <string name="tile_settings">Réglages</string>
+    <string name="tile_all">Toutes</string>
+    <string name="carplay_hint">Ouvrir ZLink</string>
+    <string name="switch_page">Changer d\'écran</string>
+
+    <string name="media_idle_title">Aucune lecture</string>
+    <string name="media_idle_artist">Toucher pour ouvrir Spotify</string>
+    <string name="media_need_access">Autoriser l\'accès aux notifications</string>
+    <string name="media_need_access_hint">pour voir le titre en cours</string>
     <string name="media_prev">Précédent</string>
     <string name="media_play_pause">Lecture / pause</string>
     <string name="media_next">Suivant</string>
+
+    <string name="home">Maison</string>
+    <string name="work">Travail</string>
+    <string name="via_waze">Waze</string>
+    <string name="set_address">Toucher pour régler</string>
+    <string name="address_title">Adresse « %1$s »</string>
+    <string name="address_hint">Ex. 12 rue de la Paix, Perpignan</string>
+
+    <string name="speed_unit">km/h</string>
+    <string name="speed_none">—</string>
+    <string name="gps_needed">Autoriser la localisation</string>
+    <string name="gps_waiting">Recherche GPS…</string>
+
+    <string name="wx_none">Météo</string>
+    <string name="wx_range">%1$d° / %2$d°</string>
+    <string name="wx_temp">%1$d°</string>
+    <string name="wx_clear">Ensoleillé</string>
+    <string name="wx_clear_night">Dégagé</string>
+    <string name="wx_partly">Éclaircies</string>
+    <string name="wx_cloudy">Nuageux</string>
+    <string name="wx_fog">Brouillard</string>
+    <string name="wx_drizzle">Bruine</string>
+    <string name="wx_rain">Pluie</string>
+    <string name="wx_snow">Neige</string>
+    <string name="wx_showers">Averses</string>
+    <string name="wx_storm">Orage</string>
+
     <string name="all_apps">Applications</string>
     <string name="pick_app_for">Choisir l\'application pour « %1$s »</string>
     <string name="pick_app">Ouvrir une application</string>
@@ -27,4 +68,5 @@
     <string name="photo_error">Impossible de lire cette image</string>
     <string name="ok">OK</string>
     <string name="cancel">Annuler</string>
+    <string name="clear">Effacer</string>
 </resources>

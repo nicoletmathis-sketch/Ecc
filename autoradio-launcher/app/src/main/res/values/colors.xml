@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- iOS dark-mode system colours -->
+    <color name="bg">#000000</color>
+    <color name="sidebar">#0D0D0F</color>
+    <color name="card">#1C1C1E</color>
+    <color name="card_pressed">#2C2C2E</color>
+    <color name="separator">#1C1C1E</color>
     <color name="text">#FFFFFF</color>
-    <color name="text_dim">#B3FFFFFF</color>
-    <color name="badge_text">#2A1F5A</color>
-    <color name="accent">#7A3CFF</color>
+    <color name="text_secondary">#8E8E93</color>
+    <color name="blue">#0A84FF</color>
+    <color name="music_red">#FA2D48</color>
 </resources>
