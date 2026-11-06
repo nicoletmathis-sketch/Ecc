@@ -1,24 +1,31 @@
 # Autoradio Launcher
 
-Écran d'accueil ultra-léger pour autoradio Android (« head unit ») avec peu de RAM.
-Seulement 5 grosses tuiles, une horloge et rien d'autre :
+Écran d'accueil façon **Apple CarPlay** pour autoradio Android (« head unit ») avec peu de RAM.
+Fond noir, cartes gris anthracite, icônes style iOS, et deux écrans :
 
-| Tuile | Ouvre |
-|-------|-------|
-| Waze | Waze |
-| Spotify | Spotify (ou le lecteur de musique par défaut) |
-| Téléphone | L'appli Bluetooth/téléphone de l'autoradio |
-| Messages | L'appli SMS / messages |
-| CarPlay | L'appli CarPlay (ZLink, AutoKit…) qui gère le dongle ou le boîtier CarPlay |
+**Tableau de bord**
+- Salutation (Bonjour / Bon après-midi / Bonsoir), heure en grand, date.
+- **Météo locale** (Open-Meteo, gratuit, sans compte), mise à jour toutes les 30 min.
+- L'A3 noire et la figurine PLK.
+- **À l'écoute** : titre, artiste, pochette et progression du morceau en cours, avec les boutons.
+- **Maison / Travail** : un appui lance l'itinéraire dans Waze.
+- **Vitesse GPS** en km/h avec la direction.
+- Gros bouton **CarPlay** (ZLink).
+
+**Applis** : grille d'icônes (Waze, Spotify, Téléphone, Messages, CarPlay, Radio, Bluetooth,
+Fichiers, Réglages, Toutes les applis).
+
+Barre latérale toujours visible : heure, réseau, Waze, Spotify, Téléphone, Messages, et le bouton
+pour changer d'écran (on peut aussi glisser le doigt vers la gauche ou la droite).
 
 ## Pourquoi c'est léger
 
-- Aucune bibliothèque (pas d'AndroidX, pas de Kotlin) : l'APK fait environ 150 Ko.
-- Aucun service en arrière-plan, aucune notification, aucun widget, pas de fond d'écran animé.
-- Fond d'écran fixe (image de 5 Ko), cartes translucides sans flou en temps réel, aucune animation.
-- La scène voiture + figurine est une image fixe de 975 × 498 px : environ 2 Mo de RAM, pas de 3D.
-- L'horloge (`TextClock`) se met à jour toute seule une fois par minute, sans tâche en boucle.
-- Quand Waze, Spotify ou CarPlay est au premier plan, le lanceur ne consomme presque rien.
+- Aucune bibliothèque (pas d'AndroidX, pas de Kotlin) : l'APK fait environ 125 Ko.
+- Aucun service en arrière-plan : GPS et progression de la musique s'arrêtent dès qu'une autre appli
+  (CarPlay, Waze…) passe devant.
+- Fond noir uni, aucune animation, pas de flou en temps réel.
+- La scène voiture + figurine est une image fixe (environ 2 Mo de RAM), pas de 3D.
+- Météo : une petite requête au plus toutes les 30 minutes, résultat gardé en mémoire.
 
 ## Installation
 
@@ -28,22 +35,27 @@ Seulement 5 grosses tuiles, une horloge et rien d'autre :
 3. Appuyer sur le bouton Accueil, choisir **Autoradio** puis **Toujours**.
    Si l'autoradio ne le propose pas : *Paramètres → Applications → Applications par défaut → Appli d'accueil*.
 
+## Autorisations (une seule fois)
+
+- **Localisation** : demandée au premier lancement, pour la vitesse et la météo.
+  Si vous avez refusé : touchez la carte vitesse ou la météo pour la redemander.
+- **Accès aux notifications** : pour afficher le vrai titre et la pochette du morceau.
+  Touchez la carte « À l'écoute » → activez **Autoradio** dans la liste → confirmez.
+  Sans cet accès, les boutons lecture / suivant / précédent marchent quand même.
+
 ## Utilisation
 
-L'écran reprend le style CarPlay : une barre d'icônes à gauche, la carte « Audi A3 » au centre
-(l'A3 noire et la figurine PLK sur leur plateau), une carte musique et un gros bouton **CarPlay** à droite.
-
-- **Appui court** sur une icône : ouvre l'application (Waze, Spotify, Téléphone, Messages).
-- **Appui long** sur une icône (ou sur le bouton CarPlay) : choisir l'application à utiliser
-  (utile si votre appli CarPlay ou téléphone a un autre nom). Le choix est mémorisé.
-- **Carte musique** : précédent / lecture-pause / suivant pilotent la musique en cours
-  (Spotify, Bluetooth…). Toucher « Spotify » ouvre l'appli.
+- **Appui court** sur une icône : ouvre l'application.
+- **Appui long** sur une icône, sur une case de la grille ou sur la carte CarPlay : choisir
+  l'application à utiliser (utile si votre appli CarPlay, Radio ou Téléphone a un autre nom).
+- **Maison / Travail** : au premier appui, tapez l'adresse ; ensuite un appui lance Waze.
+  Appui long pour changer ou effacer l'adresse.
+- **Carte « À l'écoute »** : toucher ouvre l'appli qui joue (ou Spotify).
 - **Badge PLK** : ouvre PLK dans Spotify.
-- **Appui long sur la voiture** : changer l'image, changer le nom affiché, ou revenir à l'image d'origine.
-- **Icône grille** (en bas à gauche) : liste de toutes les applis, pour les cas ponctuels.
-- **Appui long sur l'heure** (en haut à gauche) : ouvre les paramètres Android.
-
-Si une appli n'est pas trouvée, le lanceur vous demande directement laquelle utiliser.
+- **Appui long sur la grande carte** (voiture) : changer l'image, le nom, ou revenir à l'image d'origine.
+- **Glisser à gauche / à droite** ou bouton en bas de la barre : changer d'écran.
+- **Bouton Retour / Accueil** : revient au tableau de bord.
+- **Appui long sur l'heure** (barre latérale) : paramètres Android.
 
 ## CarPlay plus fluide
 
